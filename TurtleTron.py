@@ -11,7 +11,7 @@ def cyan_bike_initialize():
     cyan_bike.sety(-224)
     cyan_bike.setheading(90)
     cyan_bike.pendown()
-    cyan_bike.pensize(2)
+    cyan_bike.pensize(3)
     cyan_bike.shape('turtle')
     cyan_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
 def magenta_bike_initialize():
@@ -23,7 +23,7 @@ def magenta_bike_initialize():
     magenta_bike.sety(224)
     magenta_bike.setheading(-90)
     magenta_bike.pendown()
-    magenta_bike.pensize(2)
+    magenta_bike.pensize(3)
     magenta_bike.shape('turtle')
     magenta_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
 
@@ -39,8 +39,6 @@ if __name__ == '__main__':
     wn.tracer(0)
     cyan_history = set()
     magenta_history = set()
-    cyan_bike_initialize()
-    magenta_bike_initialize()
     #Special Abilaties
     cyan_speed = 8
     magenta_speed = 8
@@ -67,6 +65,9 @@ if __name__ == '__main__':
         grid_x.goto(-320, y)
         grid_x.hideturtle()
         y += 8
+    #Bike Initilization
+    cyan_bike_initialize()
+    magenta_bike_initialize()
     #Score
     cyan_score = 0
     magenta_score = 0
