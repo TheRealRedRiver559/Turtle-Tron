@@ -1,7 +1,6 @@
 import turtle
 import time
 import random
-#Requires Turtle Import!
 
 #Made By RedRiver559#5916 
 #V0.12
@@ -32,9 +31,6 @@ def magenta_bike_initialize():
     magenta_bike.shape('turtle')
     magenta_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
 
-
-
-#Made By RedRiver559#5916
 if __name__ == '__main__':
     wn = turtle.Screen()
     wn.title('Turtle Tron')
