@@ -1,6 +1,11 @@
 import turtle
 import time
 import random
+#Requires Turtle Import!
+
+#Made By RedRiver559#5916 
+#V0.12
+
 Size = 0.5
 def cyan_bike_initialize():
     #Cyan Bike
@@ -39,7 +44,7 @@ if __name__ == '__main__':
     wn.tracer(0)
     cyan_history = set()
     magenta_history = set()
-    #Special Abilaties
+    #Special Abilaties(Coming soon...)
     cyan_speed = 8
     magenta_speed = 8
 
@@ -122,6 +127,8 @@ if __name__ == '__main__':
     pen.write('Turtle Tron',align="center",font=("Courier", 48, "normal"))
 
 
+
+
 #Controls (Up, Down, Left, Right)
 #checking if it can reverse in the opposite x or y direction 
 #Cyan Bike
@@ -168,7 +175,7 @@ def bike_explosion(x,y):
     explosion.penup()
     explosion.setposition(x,y)
     explosion.pendown()
-    explosion.color('red')
+    explosion.color('#FF4500')
     for _ in range(7):
         length = random.randint(10,30)
         if explosion.stamp() in explosion_effects:
@@ -192,7 +199,6 @@ def magenta_win():
     global magenta_score
     magenta_score += 1
     score.clear()
-    score.goto(0,340)
     score.write(f'Cyan {cyan_score}, Magenta {magenta_score}',align="center",font=("Courier", 24, "normal"))
 
 #Resets All Coords And Historys/Lines
@@ -228,7 +234,6 @@ def keyboard_listener():
     wn.onkey(magenta_down,'Down')
     wn.onkey(magenta_right,'Right')
     wn.onkey(magenta_left,'Left')
-
 #Main Game Loop
 while True:
     keyboard_listener()
@@ -253,7 +258,7 @@ while True:
         magenta_reset()
     elif cyan_bike.ycor() >= 320 or cyan_bike.ycor() <= -320:
         #print('Out Of Bounds')
-        cyan_reset()
+        magenta_reset()
     elif magenta_bike.xcor() >= 320 or magenta_bike.xcor() <= -320:
         #print('Out Of Bounds')
         cyan_reset()
