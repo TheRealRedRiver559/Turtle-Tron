@@ -3,7 +3,7 @@ import time
 import random
 
 #Made By RedRiver559#5916 
-#V0.12
+#V0.14
 
 Size = 0.5
 def cyan_bike_initialize():
@@ -69,17 +69,27 @@ if __name__ == '__main__':
     #Bike Initilization
     cyan_bike_initialize()
     magenta_bike_initialize()
+    
     #Score
-    cyan_score = 0
-    magenta_score = 0
+    class score_system:
+        def __init__(self,magenta_score,cyan_score):
+            self.magenta_score = 0
+            self.cyan_score = 0
+        def mag_add_one(self):
+            self.magenta_score += 1
+        def cyan_add_one(self):
+            self.cyan_score += 1
+    one = score_system(0,0)
     score = turtle.Turtle()
     score.pensize(2)
     score.pencolor('White')
     score.penup()
     score.goto(0,340)
     score.pendown()
-    score.write(f'Cyan {cyan_score}, Magenta {magenta_score}',align="center",font=("Courier", 24, "normal"))
+    score.write(f'Cyan {one.cyan_score}, Magenta {one.magenta_score}',align="center",font=("Courier", 24, "normal"))
     score.hideturtle()
+
+
 
     #Author
     name = turtle.Turtle()
@@ -186,16 +196,14 @@ def bike_explosion(x,y):
     explosion.clear()
 def cyan_win():
     #print('Cyan Wins!')
-    global cyan_score
-    cyan_score += 1
+    one.cyan_add_one()
     score.clear()
-    score.write(f'Cyan {cyan_score}, Magenta {magenta_score}',align="center",font=("Courier", 24, "normal"))
+    score.write(f'Cyan {one.cyan_score}, Magenta {one.magenta_score}',align="center",font=("Courier", 24, "normal"))
 def magenta_win():
     #print('Magenta Wins!')
-    global magenta_score
-    magenta_score += 1
+    one.mag_add_one()
     score.clear()
-    score.write(f'Cyan {cyan_score}, Magenta {magenta_score}',align="center",font=("Courier", 24, "normal"))
+    score.write(f'Cyan {one.cyan_score}, Magenta {one.magenta_score}',align="center",font=("Courier", 24, "normal"))
 
 #Resets All Coords And Historys/Lines
 def Reset():
