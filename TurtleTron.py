@@ -3,46 +3,22 @@ import time
 import random
 
 #Made By RedRiver559#5916 
-#V0.14
-
+#V0.20
+#Thanks And Enjoy!
+#Todo : More Optimizations and eventually add AI and powerups.
 Size = 0.5
-def cyan_bike_initialize():
-    #Cyan Bike
-    global cyan_bike
-    cyan_bike = turtle.Turtle()
-    cyan_bike.color("#00FFFF")
-    cyan_bike.penup()
-    cyan_bike.sety(-224)
-    cyan_bike.setheading(90)
-    cyan_bike.pendown()
-    cyan_bike.pensize(3)
-    cyan_bike.shape('turtle')
-    cyan_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
-def magenta_bike_initialize():
-    #Magenta Bike
-    global magenta_bike
-    magenta_bike = turtle.Turtle()
-    magenta_bike.color("#FF00FF")
-    magenta_bike.penup()
-    magenta_bike.sety(224)
-    magenta_bike.setheading(-90)
-    magenta_bike.pendown()
-    magenta_bike.pensize(3)
-    magenta_bike.shape('turtle')
-    magenta_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
 
 if __name__ == '__main__':
     wn = turtle.Screen()
     wn.title('Turtle Tron')
     wn.bgcolor('black')
     wn.screensize(320,320)
-    wn.setup(width=320, height=320,startx=None,starty=None)
+    wn.setup(width=1200, height=950,startx=None,starty=None)
     wn.tracer(0)
     cyan_history = set()
     magenta_history = set()
-    #Special Abilaties(Coming soon...)
-    cyan_speed = 8
-    magenta_speed = 8
+
+    #Specials (Coming soon...)
 
     #Y grid lines
     grid_y = turtle.Turtle()
@@ -55,6 +31,7 @@ if __name__ == '__main__':
         grid_y.goto(x, -320)
         grid_y.hideturtle()
         x += 8
+
     #X grid lines
     grid_x = turtle.Turtle()
     y = -320
@@ -66,20 +43,48 @@ if __name__ == '__main__':
         grid_x.goto(-320, y)
         grid_x.hideturtle()
         y += 8
+
     #Bike Initilization
-    cyan_bike_initialize()
-    magenta_bike_initialize()
+    class magenta_bike_init(turtle.Turtle):
+        def __init__(self, color, pensize, shape, speed):
+            #Magenta Bike
+            super().__init__(shape)
+            self.color(color)
+            self.pensize(pensize)
+            self.speed(speed)
+
+    magenta_bike = magenta_bike_init("#FF00FF", 3, "turtle", 8)
+    magenta_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
+    magenta_bike.penup()
+    magenta_bike.sety(224)
+    magenta_bike.setheading(-90)
+    magenta_bike.pendown()
+    #
+    class cyan_bike_init(turtle.Turtle):
+        def __init__(self, color, pensize, shape, speed):
+            #Cyan Bike
+            super().__init__(shape)
+            self.color(color)
+            self.pensize(pensize)
+            self.speed(speed)
+    cyan_bike = cyan_bike_init("#00FFFF", 3, "turtle", 8)
+    cyan_bike.shapesize(stretch_wid=Size, stretch_len=Size, outline=1)
+    cyan_bike.penup()
+    cyan_bike.sety(-224)
+    cyan_bike.setheading(90)
+    cyan_bike.pendown()
+
     
     #Score
     class score_system:
-        def __init__(self,magenta_score,cyan_score):
+        def __init__(self):
             self.magenta_score = 0
             self.cyan_score = 0
         def mag_add_one(self):
             self.magenta_score += 1
         def cyan_add_one(self):
             self.cyan_score += 1
-    one = score_system(0,0)
+    one = score_system()
     score = turtle.Turtle()
     score.pensize(2)
     score.pencolor('White')
@@ -136,7 +141,7 @@ if __name__ == '__main__':
 
 
 #Controls (Up, Down, Left, Right)
-#checking if it can reverse in the opposite x or y direction 
+#checking if it can reverse in the opposite x or y direction vs its current pos.
 #Cyan Bike
 def cyan_up():
     if cyan_bike.heading() - 270 != 0:
@@ -172,6 +177,7 @@ def magenta_left():
         pass
     else:
         magenta_bike.setheading(180)
+
 #Explosion Particles
 explosion_effects = []
 def bike_explosion(x,y):
@@ -194,7 +200,8 @@ def bike_explosion(x,y):
         wn.update()
     time.sleep(1)
     explosion.clear()
-def cyan_win():
+
+def cyan_win(): # Win system for adding points
     #print('Cyan Wins!')
     one.cyan_add_one()
     score.clear()
@@ -205,7 +212,7 @@ def magenta_win():
     score.clear()
     score.write(f'Cyan {one.cyan_score}, Magenta {one.magenta_score}',align="center",font=("Courier", 24, "normal"))
 
-#Resets All Coords And Historys/Lines
+#Resets ALL Coords and line historys.
 def Reset():
     magenta_bike.sety(224)
     magenta_bike.setx(0)
@@ -218,7 +225,8 @@ def Reset():
     magenta_history.clear()
     cyan_history.clear()
     wn.update()
-def magenta_reset():
+
+def magenta_reset(): # Main reset system for each bike
     bike_explosion(x_cyan,y_cyan)
     magenta_win()
     Reset()
@@ -226,57 +234,60 @@ def cyan_reset():
     bike_explosion(x_magenta,y_magenta)
     cyan_win()
     Reset()
-def keyboard_listener():
-    wn.listen()
-    #Cyan
-    wn.onkey(cyan_up,'w')
-    wn.onkey(cyan_down,'s')
-    wn.onkey(cyan_right,'d')
-    wn.onkey(cyan_left,'a')
-    #Magenta
-    wn.onkey(magenta_up,'Up')
-    wn.onkey(magenta_down,'Down')
-    wn.onkey(magenta_right,'Right')
-    wn.onkey(magenta_left,'Left')
+
+#Bike and keyboard listeners.
+#Cyan 
+wn.onkey(cyan_up,'w')
+wn.onkey(cyan_down,'s')
+wn.onkey(cyan_right,'d')
+wn.onkey(cyan_left,'a')
+#Magenta
+wn.onkey(magenta_up,'Up')
+wn.onkey(magenta_down,'Down')
+wn.onkey(magenta_right,'Right')
+wn.onkey(magenta_left,'Left')
+
 #Main Game Loop
 while True:
-    keyboard_listener()
+    wn.listen()
+    wn.update()
     time.sleep(0.1)
-    cyan_bike.forward(cyan_speed)
-    magenta_bike.forward(magenta_speed)
+    cyan_bike.forward(cyan_bike.speed())
+    magenta_bike.forward(magenta_bike.speed())
 
     #Position Logging
     x_cyan, y_cyan = round(cyan_bike.xcor()), round(cyan_bike.ycor())
     x_magenta, y_magenta = round(magenta_bike.xcor()), round(magenta_bike.ycor())
 
     #Border Detection/ Border Scoring
-    if (x_cyan, y_cyan) in magenta_history or (x_cyan, y_cyan) in cyan_history:
-        #print('Maginta Wins!')
+    if (x_cyan, y_cyan) in magenta_history or (x_cyan, y_cyan) in cyan_history: #checks if the current cyan coords are in magentas history or cyan's history
+        print('Maginta Wins!')
         magenta_reset()
-    elif (x_magenta, y_magenta) in cyan_history or (x_magenta, y_magenta) in magenta_history:
-        #print('Cyan Wins!')
+    if (x_magenta, y_magenta) in cyan_history or (x_magenta, y_magenta) in magenta_history: #checks if the current magenta coords are in cyan's history or magenta's history
+        print('Cyan Wins!')
         cyan_reset()
     #Border Control
-    elif cyan_bike.xcor() >= 320 or cyan_bike.xcor() <= -320:
-        #print('Out Of Bounds')
+    if cyan_bike.xcor() >= 320 or cyan_bike.xcor() <= -320: #Boundry Wall
+        print('Out Of Bounds')
         magenta_reset()
-    elif cyan_bike.ycor() >= 320 or cyan_bike.ycor() <= -320:
-        #print('Out Of Bounds')
+    if cyan_bike.ycor() >= 320 or cyan_bike.ycor() <= -320: #Boundry Wall
+        print('Out Of Bounds')
         magenta_reset()
-    elif magenta_bike.xcor() >= 320 or magenta_bike.xcor() <= -320:
-        #print('Out Of Bounds')
+    if magenta_bike.xcor() >= 320 or magenta_bike.xcor() <= -320: #Boundry Wall
+        print('Out Of Bounds')
         cyan_reset()
-    elif magenta_bike.ycor() >= 320 or magenta_bike.ycor() <= -320:
-        #print('Out Of Bounds')
+    if magenta_bike.ycor() >= 320 or magenta_bike.ycor() <= -320: #Boundry Wall
+        print('Out Of Bounds')
         cyan_reset()
-    elif (x_cyan,y_cyan) == (x_magenta,y_magenta):
-        #print('Tie')
+    if (x_cyan,y_cyan) == (x_magenta,y_magenta): #Head on collisions. Ties
+        print('Tie')
         bike_explosion(x_magenta,y_magenta)
         Reset()
     else:
         cyan_history.add((x_cyan,y_cyan))
         magenta_history.add((x_magenta,y_magenta))
-    #Adding New X/Y Coords To Sets/Historys
-    #print('\nCyan Logging : ',cyan_history)
-    #print('\nMagenta Logging : ',magenta_history)
-    wn.update()
+        #Adding New X/Y Coords To Sets/Historys at the end of the loop.
+
+    #Just some informational logs if you want to see how it works.
+    #print(f'Cyan Logging :\n \t{cyan_history}')
+    #print(f'Magenta Logging :\n ,\t{magenta_history}')
