@@ -3,7 +3,7 @@ import time
 import random
 
 #Made By RedRiver559#5916 
-#V0.20
+#V0.021
 #Thanks And Enjoy!
 #Todo : More Optimizations and eventually add AI and powerups.
 Size = 0.5
@@ -73,7 +73,6 @@ if __name__ == '__main__':
     cyan_bike.sety(-224)
     cyan_bike.setheading(90)
     cyan_bike.pendown()
-
     
     #Score
     class score_system:
@@ -93,8 +92,6 @@ if __name__ == '__main__':
     score.pendown()
     score.write(f'Cyan {one.cyan_score}, Magenta {one.magenta_score}',align="center",font=("Courier", 24, "normal"))
     score.hideturtle()
-
-
 
     #Author
     name = turtle.Turtle()
@@ -263,23 +260,23 @@ while True:
     if (x_cyan, y_cyan) in magenta_history or (x_cyan, y_cyan) in cyan_history: #checks if the current cyan coords are in magentas history or cyan's history
         print('Maginta Wins!')
         magenta_reset()
-    if (x_magenta, y_magenta) in cyan_history or (x_magenta, y_magenta) in magenta_history: #checks if the current magenta coords are in cyan's history or magenta's history
+    elif (x_magenta, y_magenta) in cyan_history or (x_magenta, y_magenta) in magenta_history: #checks if the current magenta coords are in cyan's history or magenta's history
         print('Cyan Wins!')
         cyan_reset()
     #Border Control
-    if cyan_bike.xcor() >= 320 or cyan_bike.xcor() <= -320: #Boundry Wall
+    elif cyan_bike.xcor() >= 320 or cyan_bike.xcor() <= -320: #Boundry Wall
         print('Out Of Bounds')
         magenta_reset()
-    if cyan_bike.ycor() >= 320 or cyan_bike.ycor() <= -320: #Boundry Wall
+    elif cyan_bike.ycor() >= 320 or cyan_bike.ycor() <= -320: #Boundry Wall
         print('Out Of Bounds')
         magenta_reset()
-    if magenta_bike.xcor() >= 320 or magenta_bike.xcor() <= -320: #Boundry Wall
+    elif magenta_bike.xcor() >= 320 or magenta_bike.xcor() <= -320: #Boundry Wall
         print('Out Of Bounds')
         cyan_reset()
-    if magenta_bike.ycor() >= 320 or magenta_bike.ycor() <= -320: #Boundry Wall
+    elif magenta_bike.ycor() >= 320 or magenta_bike.ycor() <= -320: #Boundry Wall
         print('Out Of Bounds')
         cyan_reset()
-    if (x_cyan,y_cyan) == (x_magenta,y_magenta): #Head on collisions. Ties
+    elif (x_cyan,y_cyan) == (x_magenta,y_magenta): #Head on collisions. Ties
         print('Tie')
         bike_explosion(x_magenta,y_magenta)
         Reset()
